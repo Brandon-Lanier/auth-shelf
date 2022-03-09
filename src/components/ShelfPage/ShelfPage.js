@@ -23,28 +23,30 @@ function ShelfPage() {
         <p>All of the available iboooptems can be seen here.</p>
       </div>
 
-      {shelf_items.map(item => (
-        <Card sx={{ maxWidth: 345 }}>
-          <CardMedia
-            component="img"
-            height="140"
-            image={item.image_url}
-            alt={item.description}
-          />
-          <CardContent>
-            {/* <Typography gutterBottom variant="h5" component="div">
+      <div className="shelf-items">
+        {shelf_items.map(item => (
+          <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+              component="img"
+              height="140"
+              image={item.image_url}
+              alt={item.description}
+            />
+            <CardContent>
+              {/* <Typography gutterBottom variant="h5" component="div">
               Item
             </Typography> */}
-            <Typography variant="body2" color="text.secondary">
-              {item.description}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Delete</Button>
-            {/* <Button size="small">Learn More</Button> */}
-          </CardActions>
-        </Card>
-      ))}
+              <Typography variant="body2" color="text.secondary">
+                {item.description}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">Delete</Button>
+              {/* <Button size="small">Learn More</Button> */}
+            </CardActions>
+          </Card>
+        ))}
+      </div>
     </>
   );
 }
