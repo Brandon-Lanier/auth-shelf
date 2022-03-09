@@ -58,20 +58,18 @@ router.post('/', (req, res) => {
  */
 router.delete('/:id', (req, res) => {
   if (req.isAuthenticated()) {
-    if (req.user.id !== req.params.id) {
-      res.sendStatus(403);
-    } else {
+      const id = req.params.id;
+      const userId = req.user.id
       const qryTxt = `
-      DELETE FROM "items" WHERE "id" = $1
+      DELETE FROM "items" WHERE "id" = $1 AND "user_id" = $2
       `
-      pool.query(qryTxt, [id, req.user.id])
+      pool.query(qryTxt, [id, userId])
         .then(result => {
           res.sendStatus(200)
         }).catch(err => {
           console.log('Error deleting item', err);
           res.sendStatus(500)
         })
-    }
   } else {
       res.sendStatus(403);
     }
