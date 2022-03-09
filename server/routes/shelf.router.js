@@ -58,23 +58,18 @@ router.put('/:id', (req, res) => {
 
     // console.log(req.params.id, req.user);
 
-    // exit the request if the user is trying to update someone elses item.
-    if (Number(req.params.id) !== req.user.id) {
-      res.sendStatus(403);
-      return;
-    }
-
     const sqlText = `
       UPDATE "item"
       SET "description" = $1, "image_url" = $2
-      WHERE "id" = $3;
+      WHERE "id" = $3 AND "user_id" = $4;
     `
 
     const { description, image_url } = req.body;
     const id = req.params.id;
-    const sqlOptions = [description, image_url, id];
+    const user_id = req.user.id;
+    const sqlOptions = [description, image_url, id, user_id];
 
-    // console.log(sqlOptions);
+    console.log(sqlOptions);
 
     pool.query(sqlText, sqlOptions)
       .then(response => {
