@@ -14,6 +14,14 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {
   // endpoint functionality
+  if (req.isAuthenticated()) {
+    console.log(req.body);
+    console.log(req.user);
+
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 /**
