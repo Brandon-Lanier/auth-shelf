@@ -18,7 +18,25 @@ router.post('/', (req, res) => {
     console.log(req.body);
     console.log(req.user);
 
-    res.sendStatus(200);
+    const sqlText = `
+      INSERT INTO "item" ("description", "image_url", "user_id")
+      VALUES ($1, $2, $3);
+    `
+
+    const { description, image_url } = req.body;
+    const { id } = req.user;
+    const sqlOptions = [description, image_url, id];
+
+    console.log(sqlOptions);
+
+    pool.query(sqlText, sqlOptions)
+      .then(response => {
+        res.sendStatus(201);
+      })
+      .catch(err => {
+        console.error('Error in post route', err);
+        res.sendStatus(500);
+      })
   } else {
     res.sendStatus(403);
   }
