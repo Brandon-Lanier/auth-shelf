@@ -54,6 +54,35 @@ router.delete('/:id', (req, res) => {
  */
 router.put('/:id', (req, res) => {
   // endpoint functionality
+  if (req.isAuthenticated()) {
+
+    // exit the request if the user is trying to update someone elses item.
+    if (req.params.id !== req.user.id) {
+      res.sendStatus(403);
+      return;
+    }
+
+    const sqlText = `
+
+    `
+
+    const { description, image_url } = req.body;
+    const { id } = req.user;
+    const sqlOptions = [description, image_url, id];
+
+    console.log(sqlOptions);
+
+    pool.query(sqlText, sqlOptions)
+      .then(response => {
+        res.sendStatus(201);
+      })
+      .catch(err => {
+        console.error('Error in post route', err);
+        res.sendStatus(500);
+      })
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 /**
