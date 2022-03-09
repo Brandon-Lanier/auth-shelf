@@ -7,39 +7,44 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 // import { Card} from '@mui/material';
+import { useSelector } from 'react-redux';
 
 function ShelfPage() {
 
+  const user = useSelector(store => store.user)
+  const shelf_items = useSelector(store => store.shelf_items)
 
+  console.log('this is the cool whacky info we gots', user, shelf_items)
 
   return (
     <>
       <div className="container">
         <h2>Shelf</h2>
-        <p>All of the available items can be seen here.</p>
+        <p>All of the available iboooptems can be seen here.</p>
       </div>
 
-      <Card sx={{ maxWidth: 345 }}>
-        <CardMedia
-          component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
+      {shelf_items.map(item => (
+        <Card sx={{ maxWidth: 345 }}>
+          <CardMedia
+            component="img"
+            height="140"
+            image={item.image_url}
+            alt={item.description}
+          />
+          <CardContent>
+            {/* <Typography gutterBottom variant="h5" component="div">
+              Item
+            </Typography> */}
+            <Typography variant="body2" color="text.secondary">
+              {item.description}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small">Delete</Button>
+            {/* <Button size="small">Learn More</Button> */}
+          </CardActions>
+        </Card>
+      ))}
     </>
   );
 }
