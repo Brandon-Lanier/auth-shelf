@@ -15,8 +15,8 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   // endpoint functionality
   if (req.isAuthenticated()) {
-    console.log(req.body);
-    console.log(req.user);
+    // console.log(req.body);
+    // console.log(req.user);
 
     const sqlText = `
       INSERT INTO "item" ("description", "image_url", "user_id")
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
     const { id } = req.user;
     const sqlOptions = [description, image_url, id];
 
-    console.log(sqlOptions);
+    // console.log(sqlOptions);
 
     pool.query(sqlText, sqlOptions)
       .then(response => {
@@ -56,28 +56,32 @@ router.put('/:id', (req, res) => {
   // endpoint functionality
   if (req.isAuthenticated()) {
 
+    // console.log(req.params.id, req.user);
+
     // exit the request if the user is trying to update someone elses item.
-    if (req.params.id !== req.user.id) {
+    if (Number(req.params.id) !== req.user.id) {
       res.sendStatus(403);
       return;
     }
 
     const sqlText = `
-
+      UPDATE "item"
+      SET "description" = $1, "image_url" = $2
+      WHERE "id" = $3;
     `
 
     const { description, image_url } = req.body;
-    const { id } = req.user;
+    const id = req.params.id;
     const sqlOptions = [description, image_url, id];
 
-    console.log(sqlOptions);
+    // console.log(sqlOptions);
 
     pool.query(sqlText, sqlOptions)
       .then(response => {
-        res.sendStatus(201);
+        res.sendStatus(200);
       })
       .catch(err => {
-        console.error('Error in post route', err);
+        console.error('Error in put route', err);
         res.sendStatus(500);
       })
   } else {
