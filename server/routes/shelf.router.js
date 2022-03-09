@@ -61,7 +61,7 @@ router.delete('/:id', (req, res) => {
       const id = req.params.id;
       const userId = req.user.id
       const qryTxt = `
-      DELETE FROM "items" WHERE "id" = $1 AND "user_id" = $2
+      DELETE FROM "item" WHERE "id" = $1 AND "user_id" = $2
       `
       pool.query(qryTxt, [id, userId])
         .then(result => {
