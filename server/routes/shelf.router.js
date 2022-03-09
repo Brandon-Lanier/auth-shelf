@@ -90,6 +90,20 @@ router.put('/:id', (req, res) => {
  */
 router.get('/count', (req, res) => {
   // endpoint functionality
+  const sqlText = `
+    SELECT "user".*, count("item") AS "shelf_items" FROM "user"
+    JOIN "item" ON "user"."id" = "item"."user_id"
+    GROUP BY "user"."id";
+  `
+
+  pool.query(sqlText)
+    .then(response => {
+      res.send(response.rows);
+    })
+    .catch(err => {
+      console.log('Error in get count', err);
+      res.sendStatus(500);
+    })
 });
 
 /**
