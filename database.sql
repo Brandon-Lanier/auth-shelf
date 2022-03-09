@@ -16,4 +16,3 @@ CREATE TABLE "item" (
     "user_id" INT REFERENCES "user"
 );
 
--- test

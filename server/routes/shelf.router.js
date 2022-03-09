@@ -1,4 +1,7 @@
 const express = require('express');
+const {
+  user
+} = require('pg/lib/defaults');
 const pool = require('../modules/pool');
 const router = express.Router();
 
@@ -6,7 +9,15 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-  res.sendStatus(200); // For testing only, can be removed
+  const qryTxt = `SELECT * FROM "item"`
+  pool.query(qryTxt)
+    .then(result => {
+      res.send(result.rows)
+      console.log('GET result is', result);
+    }).catch(err => {
+      console.log('Error in GET', err);
+      res.sendStatus(500)
+    })
 });
 
 /**
@@ -46,8 +57,24 @@ router.post('/', (req, res) => {
  * Delete an item if it's something the logged in user added
  */
 router.delete('/:id', (req, res) => {
-  // endpoint functionality
-});
+  if (req.isAuthenticated()) {
+      const id = req.params.id;
+      const userId = req.user.id
+      const qryTxt = `
+      DELETE FROM "items" WHERE "id" = $1 AND "user_id" = $2
+      `
+      pool.query(qryTxt, [id, userId])
+        .then(result => {
+          res.sendStatus(200)
+        }).catch(err => {
+          console.log('Error deleting item', err);
+          res.sendStatus(500)
+        })
+  } else {
+      res.sendStatus(403);
+    }
+  });
+
 
 /**
  * Update an item if it's something the logged in user added
