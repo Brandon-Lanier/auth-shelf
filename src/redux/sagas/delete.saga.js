@@ -6,7 +6,8 @@ const { takeLatest, put } = require("redux-saga/effects");
 function* deleteItem(action) {
   try {
     //Sending the item to the server to delete
-    yield axios.delete('/api/shelf', action.payload)
+    console.log('delete item id of this', action.payload.id);
+    yield axios.delete(`/api/shelf/${action.payload.id}`)
     yield put({ type: 'FETCH_ITEMS' })
   } catch (error) {
     console.log('Error in Delete Item Saga', error);
