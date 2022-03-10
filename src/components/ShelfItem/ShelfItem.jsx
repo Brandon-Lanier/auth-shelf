@@ -51,12 +51,12 @@ function ShelfItem({item}){
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="Edit">
+        {/* <IconButton aria-label="Edit">
           <EditIcon />
-        </IconButton>
-        <IconButton aria-label="Complete Task">
+        </IconButton> */}
+        {/* <IconButton aria-label="Complete Task">
           <DoneIcon />
-        </IconButton>
+        </IconButton> */}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
