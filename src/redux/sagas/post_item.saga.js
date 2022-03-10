@@ -1,9 +1,11 @@
 const axios = require('axios');
-const { takeLatest } = require("redux-saga/effects");
+const { takeLatest, put } = require("redux-saga/effects");
 
 function* postItem(action) {
-  const { user_id, } = action;
-  yield axios.post()
+  yield axios.post('/api/shelf', action.payload);
+  yield put({
+    type: 'FETCH_ITEMS',
+  })
 }
 
 function* postSaga() {
