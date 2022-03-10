@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import ShelfItem from '../ShelfItem/ShelfItem';
 
 import { styled } from '@mui/material/styles';
@@ -34,7 +34,7 @@ function ShelfPage() {
 
   console.log('this is the cool whacky info we gots', shelf_items)
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch({
       type: 'FETCH_ITEMS'
     })
