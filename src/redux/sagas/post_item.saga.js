@@ -2,10 +2,9 @@ const axios = require('axios');
 const { takeLatest, put } = require("redux-saga/effects");
 
 /**
- * action.payload structure: {
- *    description: string,
- *    image_url: string,
- * }
+ * @param {Object} action - the body of the request to send
+ * @param {string} action.description - Item description
+ * @param {string} action.image_url - Image url of the item on the shelf
  */
 function* postItem(action) {
   // send new item to the database
