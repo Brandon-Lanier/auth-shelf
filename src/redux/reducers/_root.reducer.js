@@ -3,6 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import shelf_items from './shelf_items.reducer';
 import about from './about.reducer';
+import kanye from './kanye.reducer'
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   shelf_items, // Here are all the shelf items, cool!
   about,
+  kanye,
 });
 
 export default rootReducer;
