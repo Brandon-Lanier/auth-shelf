@@ -9,4 +9,8 @@ function* getShelfItems() {
     }
 }
 
-export default getShelfItems
+function* loginSaga() {
+    yield takeLatest('FETCH_ITEMS', getShelfItems);
+  }
+
+export default getSaga
