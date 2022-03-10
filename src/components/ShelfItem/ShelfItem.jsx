@@ -68,10 +68,10 @@ function ShelfItem({item}){
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Consider the following</Typography>
+          <Typography paragraph>Consider the following:</Typography>
           <Typography paragraph>
             <i>
-              {item.quote}
+              {item.kanyeQuote}
             </i>
           </Typography>
           <Typography align='right'>
