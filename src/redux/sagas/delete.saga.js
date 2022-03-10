@@ -7,7 +7,7 @@ function* deleteItem(action) {
     try {
         //Sending the item to the server to delete
         yield axios.delete('/api/shelf', action.payload )
-        yield put({type: 'FETCH_ITEM'})
+        yield put({type: 'FETCH_ITEMS'})
     } catch(error) {
         console.log('Error in Delete Item Saga', error); 
     }
