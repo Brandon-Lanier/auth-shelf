@@ -15,10 +15,10 @@ import Paper from '@mui/material/Paper';
 
 
 // import { Card} from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function ShelfPage() {
-
+  const dispatch = useDispatch();
 
   const heights = [150, 30, 90, 70, 90, 100, 150, 30, 50, 80];
 
@@ -34,6 +34,12 @@ function ShelfPage() {
 
   console.log('this is the cool whacky info we gots', shelf_items)
 
+  React.useEffect(() => {
+    dispatch({
+      type: 'FETCH_ITEMS'
+    })
+  }, [])
+
   return (
     <>
       <div className="container">
@@ -43,8 +49,8 @@ function ShelfPage() {
 
       <div className="shelf-items">
 
-        <Box sx={{ width: 4/5, minHeight: 377 }}>
-          <Masonry columns={[1,2,3,4]} spacing={4}>
+        <Box sx={{ width: 4 / 5, minHeight: 377 }}>
+          <Masonry columns={[1, 2, 3, 4]} spacing={4}>
 
             {shelf_items.map((item, i) => (
               <div key={i}>
