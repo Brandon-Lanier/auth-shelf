@@ -31,6 +31,12 @@ function App() {
     dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch({
+      type: 'GET_ABOUT'
+    })
+  }, [])
+
   return (
     <Router>
       <div>
