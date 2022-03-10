@@ -5,19 +5,33 @@ const {
 const pool = require('../modules/pool');
 const router = express.Router();
 
+
 /**
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-  const qryTxt = `SELECT * FROM "item"`
-  pool.query(qryTxt)
-    .then(result => {
-      res.send(result.rows)
-      console.log('GET result is', result);
-    }).catch(err => {
-      console.log('Error in GET', err);
-      res.sendStatus(500)
-    })
+  if (req.isAuthenticated) {
+    const qryTxt = `
+    SELECT item.*, "user".username FROM item
+    JOIN "user" ON "user".id = item.user_id;
+    `
+    pool.query(qryTxt)
+      .then(result => {
+        res.send(result.rows)
+      }).catch(err => {
+        console.log('Error in GET for authorized user', err);
+        res.sendStatus(500)
+      })
+  } else {
+    const qryTxt2 = `SELECT item.id, item.description, item.image_url FROM item;`
+    pool.query(qryTxt2)
+      .then(result => {
+        res.send(result.rows)
+      }).catch(err => {
+        console.log('Error in get items for unauthorized user', err);
+        res.sendStatus(500)
+      })
+  }
 });
 
 /**
@@ -34,8 +48,13 @@ router.post('/', (req, res) => {
       VALUES ($1, $2, $3);
     `
 
-    const { description, image_url } = req.body;
-    const { id } = req.user;
+    const {
+      description,
+      image_url
+    } = req.body;
+    const {
+      id
+    } = req.user;
     const sqlOptions = [description, image_url, id];
 
     // console.log(sqlOptions);
@@ -58,22 +77,22 @@ router.post('/', (req, res) => {
  */
 router.delete('/:id', (req, res) => {
   if (req.isAuthenticated()) {
-      const id = req.params.id;
-      const userId = req.user.id
-      const qryTxt = `
+    const id = req.params.id;
+    const userId = req.user.id
+    const qryTxt = `
       DELETE FROM "item" WHERE "id" = $1 AND "user_id" = $2
       `
-      pool.query(qryTxt, [id, userId])
-        .then(result => {
-          res.sendStatus(200)
-        }).catch(err => {
-          console.log('Error deleting item', err);
-          res.sendStatus(500)
-        })
+    pool.query(qryTxt, [id, userId])
+      .then(result => {
+        res.sendStatus(200)
+      }).catch(err => {
+        console.log('Error deleting item', err);
+        res.sendStatus(500)
+      })
   } else {
-      res.sendStatus(403);
-    }
-  });
+    res.sendStatus(403);
+  }
+});
 
 
 /**
@@ -91,7 +110,10 @@ router.put('/:id', (req, res) => {
       WHERE "id" = $3 AND "user_id" = $4;
     `
 
-    const { description, image_url } = req.body;
+    const {
+      description,
+      image_url
+    } = req.body;
     const id = req.params.id;
     const user_id = req.user.id;
     const sqlOptions = [description, image_url, id, user_id];
