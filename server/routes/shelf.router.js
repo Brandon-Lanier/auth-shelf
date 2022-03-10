@@ -40,8 +40,8 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   // endpoint functionality
   if (req.isAuthenticated()) {
-    // console.log(req.body);
-    // console.log(req.user);
+    console.log(req.body);
+    console.log(req.user);
 
     const sqlText = `
       INSERT INTO "item" ("description", "image_url", "user_id")

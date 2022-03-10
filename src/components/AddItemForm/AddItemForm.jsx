@@ -6,11 +6,20 @@ function AddItem() {
     const [description, setDescription] = useState('')
     const [imageUrl, setImageUrl] = useState('')
 
+    const dispatch = useDispatch()
 
     console.log(description, imageUrl);
 
     const handleSubmit = () => {
         console.log('clicked');
+
+        dispatch({
+            type: 'POST_ITEM',
+            payload: {description: description, image_url: imageUrl}
+        })
+
+        setDescription('')
+        setImageUrl('')
     }
 
     return (
