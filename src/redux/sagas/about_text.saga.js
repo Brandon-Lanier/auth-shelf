@@ -4,7 +4,7 @@ import { put, takeLatest } from 'redux-saga/effects'
 function* getAbout() {
   const response = yield axios.get('https://baconipsum.com/api/?type=all-meat&paras=5&start-with-lorem=1&format=text');
   yield put({
-    type: 'SET_ABOUT_TEXT',
+    type: 'SET_ABOUT_INFO',
     payload: response.data,
   })
 }
