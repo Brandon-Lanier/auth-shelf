@@ -12,9 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useSelector } from 'react-redux';
 
-function ShelfItem({item}){
-
-
+function ShelfItem({ item }) {
   const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
@@ -26,7 +24,7 @@ function ShelfItem({item}){
     }),
   }));
 
-  const user = useSelector(store => store.user)
+  const user = useSelector((store) => store.user);
 
   const [expanded, setExpanded] = React.useState(false);
 
@@ -34,19 +32,16 @@ function ShelfItem({item}){
     setExpanded(!expanded);
   };
 
-
-
-    return(
-      <Card 
-      sx={{ maxWidth: 345 }}>
+  return (
+    <Card sx={{ maxWidth: 345 }}>
       <CardMedia
-        component="img"
-        height="194"
+        component='img'
+        height='194'
         image={item.image_url}
         alt={'Whoops it looks like there was an error'}
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant='body2' color='text.secondary'>
           {item.description}
         </Typography>
       </CardContent>
@@ -61,25 +56,25 @@ function ShelfItem({item}){
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
+          aria-label='show more'
         >
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={expanded} timeout='auto' unmountOnExit>
         <CardContent>
           <Typography paragraph>Consider the following:</Typography>
           <Typography paragraph>
-            <i>
-              {item.kanyeQuote}
-            </i>
+            <i>{item.kanyeQuote}</i>
           </Typography>
-          <Typography align='right'>
-            -Yeezy
-          </Typography>
+          {item.username ? (
+            <Typography align='right'>- {item.username}</Typography>
+          ) : (
+            <Typography align='right'>- Yeezy</Typography>
+          )}
         </CardContent>
       </Collapse>
     </Card>
-    )
+  );
 }
 export default ShelfItem;

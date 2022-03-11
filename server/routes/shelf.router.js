@@ -10,7 +10,7 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-  if (req.isAuthenticated) {
+  if (req.isAuthenticated()) {
     const qryTxt = `
     SELECT item.*, "user".username FROM item
     JOIN "user" ON "user".id = item.user_id;
