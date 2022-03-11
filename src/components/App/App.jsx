@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import {
-    HashRouter as Router,
-    Redirect,
-    Route,
-    Switch,
+  HashRouter as Router,
+  Redirect,
+  Route,
+  Switch,
 } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +27,7 @@ import { RouterRounded } from '@mui/icons-material';
 function App() {
   const dispatch = useDispatch();
 
-  const user = useSelector(store => store.user);
+  const user = useSelector((store) => store.user);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
@@ -35,9 +35,9 @@ function App() {
 
   useEffect(() => {
     dispatch({
-      type: 'GET_ABOUT'
-    })
-  }, [])
+      type: 'GET_ABOUT',
+    });
+  }, []);
 
   return (
     <Router>
@@ -45,13 +45,13 @@ function App() {
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from='/' to='/home' />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
             // shows AboutPage at all times (logged in or not)
             exact
-            path="/about"
+            path='/about'
           >
             <AboutPage />
             <AddItem />
@@ -64,68 +64,54 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/user"
+            path='/user'
           >
             <UserPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
+          <Route
             // logged in shows InfoPage else shows LoginPage
             exact
-            path="/shelf"
+            path='/shelf'
           >
             <ShelfPage />
-          </ProtectedRoute>
+          </Route>
 
-          <Route
-            exact
-            path="/login"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path='/login'>
+            {user.id ? (
+              // If the user is already logged in,
               // redirect to the /user page
-              <Redirect to="/user" />
-              :
+              <Redirect to='/user' />
+            ) : (
               // Otherwise, show the login page
               <LoginPage />
-            }
+            )}
           </Route>
 
-          <Route
-            exact
-            path="/registration"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path='/registration'>
+            {user.id ? (
+              // If the user is already logged in,
               // redirect them to the /user page
-              <Redirect to="/user" />
-              :
+              <Redirect to='/user' />
+            ) : (
               // Otherwise, show the registration page
               <RegisterPage />
-            }
+            )}
           </Route>
 
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
-              // If the user is already logged in, 
+          <Route exact path='/home'>
+            {user.id ? (
+              // If the user is already logged in,
               // redirect them to the /user page
-              <Redirect to="/user" />
-              :
+              <Redirect to='/user' />
+            ) : (
               // Otherwise, show the Landing page
               <LandingPage />
-            }
+            )}
           </Route>
 
-          <Route
-            exact
-            path="/additem"
-          >
-          
-              <AddItem/>
-            
+          <Route exact path='/additem'>
+            <AddItem />
           </Route>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
