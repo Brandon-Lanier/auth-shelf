@@ -35,8 +35,8 @@ function Nav() {
           About
         </Link>
       
-        <Link className="navLink" to="/about">
-          About
+        <Link className="navLink" to="/additem">
+          Create New
         </Link>
       </div>
     </div>
