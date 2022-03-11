@@ -9,8 +9,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 function ShelfItem({ item }) {
   const ExpandMore = styled((props) => {
@@ -24,6 +26,8 @@ function ShelfItem({ item }) {
     }),
   }));
 
+  const dispatch = useDispatch();
+
   const user = useSelector((store) => store.user);
 
   const [expanded, setExpanded] = React.useState(false);
@@ -31,6 +35,13 @@ function ShelfItem({ item }) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  
+  const handleDelete = () => {
+      console.log(item.id);
+      if (alert('Are you sure?')) {
+      dispatch({type: 'DELETE_ITEM', payload: item.id})
+  }
+}
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -72,6 +83,9 @@ function ShelfItem({ item }) {
           ) : (
             <Typography align='right'>- Yeezy</Typography>
           )}
+          {user.id === item.user_id &&
+            <DeleteSweepIcon onClick={handleDelete} />
+          }
         </CardContent>
       </Collapse>
     </Card>

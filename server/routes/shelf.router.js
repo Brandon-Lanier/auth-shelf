@@ -78,6 +78,8 @@ router.post('/', (req, res) => {
  */
 router.delete('/:id', (req, res) => {
   if (req.isAuthenticated()) {
+    console.log('Inside delete route', req.params.id, req.user);
+    
     const id = req.params.id;
     const userId = req.user.id
     const qryTxt = `
