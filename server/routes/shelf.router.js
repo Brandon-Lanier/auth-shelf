@@ -44,18 +44,19 @@ router.post('/', (req, res) => {
     console.log(req.user);
 
     const sqlText = `
-      INSERT INTO "item" ("description", "image_url", "user_id")
-      VALUES ($1, $2, $3);
+      INSERT INTO "item" ("description", "image_url", "user_id", "kanyeQuote")
+      VALUES ($1, $2, $3, $4);
     `
 
     const {
       description,
-      image_url
+      image_url,
+      kanye,
     } = req.body;
     const {
       id
     } = req.user;
-    const sqlOptions = [description, image_url, id];
+    const sqlOptions = [description, image_url, id, kanye];
 
     // console.log(sqlOptions);
 
