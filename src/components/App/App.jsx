@@ -53,7 +53,7 @@ function App() {
             path="/about"
           >
             <AboutPage />
-            <AddItem/>
+            <AddItem />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
@@ -118,6 +118,15 @@ function App() {
             }
           </Route>
 
+          <Route
+            exact
+            path="/additem"
+          >
+          
+          
+              <AddItem/>
+            
+          </Route>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>
